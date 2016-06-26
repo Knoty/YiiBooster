@@ -39,7 +39,7 @@
         "ext-xdebug": "*",
         "phing/phing": "2.12.0",
 
-        "phpunit/phpunit": "4.8",
+        "phpunit/phpunit": "*",
 
         "phploc/phploc": "2.0.6",
         "sebastian/phpcpd": "2.0.1",
@@ -47,7 +47,7 @@
         "phpmd/phpmd": "2.3.2",
         "squizlabs/php_codesniffer": "2.3.4",
 
-        "apigen/apigen": "2.8.1",
+        "apigen/apigen": "*",
         "mayflower/php-codebrowser": "1.1.1",
 
         "ncuesta/pinocchio": "dev-master"
