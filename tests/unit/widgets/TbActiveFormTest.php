@@ -91,7 +91,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$form->type = 'horizontal';
 		ob_start();
 		$form->init();
-		ob_clean();
+		ob_end_clean();
 		$this->assertEquals($form->htmlOptions['class'], 'form-' . $form->type);
 	}
 
@@ -127,21 +127,21 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		// $form->inlineErrors = true;
 		ob_start();
 		$form->init();
-		ob_clean();
+		ob_end_clean();
 		$this->assertAttributeEquals('help-block error', 'errorMessageCssClass', $form);
 
 		$form = $this->makeWidget();
 		// $form->inlineErrors = false;
 		ob_start();
 		$form->init();
-		ob_clean();
+		ob_end_clean();
 		$this->assertAttributeEquals('help-block error', 'errorMessageCssClass', $form);
 
 		$form = $this->makeWidget();
 		$form->errorMessageCssClass = 'foo bar';
 		ob_start();
 		$form->init(); // init sets the errorMessageCssClass !
-		ob_clean();
+		ob_end_clean();
 		$this->assertAttributeEquals('foo bar', 'errorMessageCssClass', $form);
 	}
 
@@ -151,7 +151,7 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$form->type = 'horizontal';
 		ob_start();
 		$form->init();
-		ob_clean();
+		ob_end_clean();
 		$this->assertEquals('div.form-group', $form->clientOptions['inputContainer']);
 
 		$form = $this->makeWidget();
@@ -159,14 +159,14 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$form->clientOptions['inputContainer'] = 'foobar';
 		ob_start();
 		$form->init();
-		ob_clean();
+		ob_end_clean();
 		$this->assertEquals('foobar', $form->clientOptions['inputContainer']);
 
 		$form = $this->makeWidget();
 		$form->type = 'vertical';
 		ob_start();
 		$form->init();
-		ob_clean();
+		ob_end_clean();
 		$this->assertArrayHasKey('inputContainer', $form->clientOptions);
 	}
 
@@ -256,7 +256,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$model = new FakeModel();
 		$attribute = 'foobar';
 
-		$mock = $this->getMock(self::WIDGET_CLASS, array($innerMethod));
+		$mock = $this->getMockBuilder(self::WIDGET_CLASS)
+            ->setMethods(array($innerMethod))
+            ->getMock();
 		$mock->expects($this->once())->method($innerMethod);
 		if(in_array($outerMethod, array('dropDownListGroup', 'listBoxGroup', 'checkboxListGroup', 'radioButtonListGroup')))
 			$mock->$outerMethod($model, $attribute, array('widgetOptions'=>array('data'=>array())));
@@ -299,7 +301,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		$model = new FakeModel();
 		$attribute = 'foobar';
 
-		$mock = $this->getMock(self::WIDGET_CLASS, array('widgetGroupInternal'));
+		$mock = $this->getMockBuilder(self::WIDGET_CLASS)
+            ->setMethods(array('widgetGroupInternal'))
+            ->getMock();
 		$mock->expects($this->once())->method('widgetGroupInternal')->with($className, $this->anything(),
 			$this->anything(), $this->anything());
 		$mock->$outerMethod($model, $attribute, array());
@@ -370,7 +374,9 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 
 	public function testCustomFieldGroup()
 	{
-		$mock = $this->getMock(self::WIDGET_CLASS, array('customFieldGroupInternal', 'initOptions'));
+		$mock = $this->getMockBuilder(self::WIDGET_CLASS)
+            ->setMethods(array('customFieldGroupInternal', 'initOptions'))
+            ->getMock();
 		$mock->expects($this->once())->method('initOptions');
 		$mock->expects($this->once())->method('customFieldGroupInternal');
 
@@ -379,33 +385,61 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 
 	public function testWidgetGroup()
 	{
-		$mock = $this->getMock(self::WIDGET_CLASS, array('customFieldGroupInternal', 'initOptions'));
+		$mock = $this->getMockBuilder(self::WIDGET_CLASS)
+            ->setMethods(array('customFieldGroupInternal', 'initOptions'))
+            ->getMock();
 		$mock->expects($this->once())->method('initOptions');
 		$mock->expects($this->once())->method('customFieldGroupInternal');
 
 		$mock->widgetGroup('foobar', null, null);
 	}
 
-	public function testCustomFieldGroupInternal() {
-		
-		$model = new FakeModel();
-		$mock = $this->getMock(self::WIDGET_CLASS, array('horizontalGroup', 'verticalGroup', 'inlineGroup'));
+	public function testCustomFieldGroupInternalHorizontal()
+    {
+        $model = new FakeModel();
+        $mock = $this->getMockBuilder(self::WIDGET_CLASS)
+            ->setMethods(array('horizontalGroup', 'verticalGroup', 'inlineGroup'))
+            ->getMock();
 
-		$mock->type = 'horizontal';
-		$mock->expects($this->once())->method('horizontalGroup');
-		$mock->textFieldGroup($model, 'login');
+        $mock->type = 'horizontal';
+        $mock->expects($this->once())->method('horizontalGroup');
+        $mock->textFieldGroup($model, 'login');
+    }
 
-		$mock->type = 'vertical';
-		$mock->expects($this->once())->method('verticalGroup');
-		$mock->textFieldGroup($model, 'login');
+    public function testCustomFieldGroupInternalVertical()
+    {
+        $model = new FakeModel();
+        $mock = $this->getMockBuilder(self::WIDGET_CLASS)
+            ->setMethods(array('horizontalGroup', 'verticalGroup', 'inlineGroup'))
+            ->getMock();
 
-		$mock->type = 'inline';
-		$mock->expects($this->once())->method('inlineGroup');
-		$mock->textFieldGroup($model, 'login');
+        $mock->type = 'vertical';
+        $mock->expects($this->once())->method('verticalGroup');
+        $mock->textFieldGroup($model, 'login');
+    }
 
-		$form = $this->makeWidget();
+    public function testCustomFieldGroupInternalInline()
+    {
+        $model = new FakeModel();
+        $mock = $this->getMockBuilder(self::WIDGET_CLASS)
+            ->setMethods(array('horizontalGroup', 'verticalGroup', 'inlineGroup'))
+            ->getMock();
+
+        $mock->type = 'inline';
+        $mock->expects($this->once())->method('inlineGroup');
+        $mock->textFieldGroup($model, 'login');
+    }
+
+    /**
+     * @test
+     * @expectedException CException
+     */
+    public function CustomFieldGroupInternalException()
+    {
+        $model = new FakeModel();
+
+        $form = $this->makeWidget();
 		$form->type = 'foobar';
-		$this->setExpectedException('CException');
 		$form->textFieldGroup($model, 'login');
 	}
 
@@ -435,21 +469,10 @@ class TbActiveForm2Test extends PHPUnit_Framework_TestCase {
 		ob_start();
 		$method->invokeArgs($form, array(&$fieldData, &$model, &$attribute, &$rowOptions));
 		$data = ob_get_clean();
-		$doc = new DOMDocument();
-		$doc->loadHTML($data);
-		$actual = new DOMXPath($doc);
-		$matches = $actual->query(
-			'//div[contains(@class, "form-group") and contains(@class, "' . CHtml::$errorCss . '")]'
-			. '/label[contains(@class, "control-label") and contains(@class, "' . $rowOptions['labelOptions']['class'] . '")]'
-			. '/following::div'
-			// . '/following-sibling::div[@class="controls"]' // removed in bootstrap 3
-			. '/div[contains(@class, "input-group") and contains(@class, "input-group")  and text()="' . $fieldData . '"]'
-			. '/span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['prependOptions']['class'] . '") and text()="' . $rowOptions['prepend'] . '"]'
-			. '/following-sibling::span[contains(@class,"input-group-addon") and contains(@class, "' . $rowOptions['appendOptions']['class'] . '") and text()="' . $rowOptions['append'] . '"]'
-			// . '/following::div[@class="' . $rowOptions['errorOptions']['class'] . '"]' // not handled yet
-			. '/following::span[contains(@class,"' . $rowOptions['hintOptions']['class'] . '") and text()="' . $rowOptions['hint'] . '"]'
-		);
-		$this->assertEquals(1, $matches->length);
+		$this->assertEquals(
+		    '<div class="form-group"><label class="foo col-sm-3 control-label error" for="FakeModel_login">Login</label><div class="col-sm-9"><div class="input-group input-group"><span class="bar input-group-addon">before</span>here_will_be_field<span class="apple input-group-addon">after</span></div><div class="i-am-a-banana">simple error text</div><span class="codemonkey help-block">blah</span></div></div>',
+            $data
+        );
 	}
 
 	public function testVerticalGroup() {
