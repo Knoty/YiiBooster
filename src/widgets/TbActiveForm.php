@@ -1135,6 +1135,7 @@ class TbActiveForm extends CActiveForm {
 				break;
 
 			default:
+			    ob_end_clean();
 				throw new CException('Invalid form type');
 		}
 
@@ -1187,13 +1188,14 @@ class TbActiveForm extends CActiveForm {
 		
 		$_attribute = $attribute;
 		CHtml::resolveName($model, $_attribute);
-		if ($model->hasErrors($_attribute) && $this->clientOptions['errorCssClass'])
+		if (\array_key_exists('errorCssClass', $this->clientOptions) && $model->hasErrors($_attribute))
 			self::addCssClass($groupOptions, $this->clientOptions['errorCssClass']);
 
 		echo CHtml::openTag('div', $groupOptions);
 
 		if (!isset($options['labelOptions']['class']) || !preg_match('/col-\w{2}-\d{1,2}/', $options['labelOptions']['class']))
-			$this->addCssClass($options['labelOptions'], 'col-sm-3');
+			static::addCssClass($options['labelOptions'], 'col-sm-3');
+
 		self::addCssClass($options['labelOptions'], 'control-label');
 		if (isset($options['label'])) {
 			if (!empty($options['label'])) {
@@ -1255,7 +1257,7 @@ class TbActiveForm extends CActiveForm {
 		
 		$_attribute = $attribute;
 		CHtml::resolveName($model, $_attribute);
-		if ($model->hasErrors($_attribute) && $this->clientOptions['errorCssClass'])
+		if (\array_key_exists('errorCssClass', $this->clientOptions) && $model->hasErrors($_attribute))
 			self::addCssClass($groupOptions, $this->clientOptions['errorCssClass']);
 
 		echo CHtml::openTag('div', $groupOptions);
