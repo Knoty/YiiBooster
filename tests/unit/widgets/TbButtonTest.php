@@ -14,9 +14,33 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function HtmlOptionsClassContainsSomething() {
+    public function CreateButtonHtmlOptionsClassExist() {
         $button = new TbButton();
         $button->init();
         $this->assertNotEmpty($button->htmlOptions);
+    }
+
+    /** @test */
+    public function ButtonNotVisibleHtmlOptionsClassEmpty() {
+        $button = new TbButton();
+        $button->visible = false;
+        $button->init();
+        $this->assertEmpty($button->htmlOptions);
+    }
+
+    /** @test */
+    public function PassLinkButtonToHtmlOptionClass() {
+        $button = new TbButton();
+        $button->buttonType = 'link';
+        $button->init();
+        $this->assertContains('btn-link', $button->htmlOptions['class']);
+    }
+
+    /** @test */
+    public function PassButtonDisabledToHtmlOptionClass() {
+        $button = new TbButton();
+        $button->disabled = true;
+        $button->init();
+        $this->assertContains('disabled', $button->htmlOptions);
     }
 }
