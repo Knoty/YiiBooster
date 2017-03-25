@@ -45,7 +45,7 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function PassButtonDisabledToHtmlOptionClass2() {
+    public function ChangeSizeOfButtonToLarge() {
         $button = new TbButton();
         $button->size = 'large';
         $button->init();
