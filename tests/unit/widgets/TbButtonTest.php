@@ -51,4 +51,12 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $button->init();
         $this->assertContains('btn-lg', $button->htmlOptions['class']);
     }
+
+    /** @test */
+    public function PassBlockButtonPropertyToHtmlOptionClass() {
+        $button = new TbButton();
+        $button->block = true;
+        $button->init();
+        $this->assertContains('btn-block', $button->htmlOptions['class']);
+    }
 }
