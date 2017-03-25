@@ -43,4 +43,12 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $button->init();
         $this->assertContains('disabled', $button->htmlOptions);
     }
+
+    /** @test */
+    public function PassButtonDisabledToHtmlOptionClass2() {
+        $button = new TbButton();
+        $button->size = 'large';
+        $button->init();
+        $this->assertContains('btn-lg', $button->htmlOptions['class']);
+    }
 }
