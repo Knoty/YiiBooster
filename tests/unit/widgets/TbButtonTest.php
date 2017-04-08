@@ -109,5 +109,12 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $this->assertContains('glyphicon glyphicon-test', $button->icon);
     }
 
-
+    /** @test */
+    public function FormIconButtonWithIconClass() {
+        $button = new TbButton();
+        $button->icon = 'icon';
+        $button->init();
+        $this->assertContains('<i class=', $button->label);
+        $this->assertNotContains('glyphicon glyphicon-icon', $button->icon);
+    }
 }
