@@ -100,4 +100,14 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('btn-test btn btn-default', $button->htmlOptions['class']);
     }
 
+    /** @test */
+    public function FormIconButtonWithoutIconAndFaClasses() {
+        $button = new TbButton();
+        $button->icon = 'test';
+        $button->init();
+        $this->assertContains('<span class=', $button->label);
+        $this->assertContains('glyphicon glyphicon-test', $button->icon);
+    }
+
+
 }
