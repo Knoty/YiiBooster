@@ -19,14 +19,14 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function CreateButtonHtmlOptionsClassExist() {
+    public function CreateButtonHtmlOptionsExist() {
         $button = new TbButton();
         $button->init();
         $this->assertNotEmpty($button->htmlOptions);
     }
 
     /** @test */
-    public function ButtonNotVisibleHtmlOptionsClassEmpty() {
+    public function ButtonNotVisibleHtmlOptionsEmpty() {
         $button = new TbButton();
         $button->visible = false;
         $button->init();
@@ -74,7 +74,7 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function PassHtmlHrefOptionsOfButtonToUrlOptionClass() {
+    public function PassHtmlHrefOptionsOfButtonToUrlOption() {
         $button = new TbButton();
         $button->url = null;
         $button->htmlOptions['href'] = 'test tag';
