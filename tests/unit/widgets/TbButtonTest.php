@@ -8,6 +8,11 @@
  */
 class TbButtonTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        require_once ROOT_DIR . '/src/widgets/TbButton.php';
+    }
+
     /** @test */
     public function CanCreateButton() {
         new TbButton();
@@ -94,4 +99,5 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $button->init();
         $this->assertEquals('btn-test btn btn-default', $button->htmlOptions['class']);
     }
+
 }
