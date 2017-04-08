@@ -77,4 +77,13 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('test tag', $button->url);
         $this->assertArrayNotHasKey('href', $button->htmlOptions, 'href in options not found');
     }
+
+    /** @test */
+    public function ActivateDropdownPossibilityForButton() {
+        $button = new TbButton();
+        $button->items = array('dropdown btn 1', 'dropdown btn 2');
+        $button->url = null;
+        $button->init();
+        $this->assertEquals('#', $button->url);
+    }
 }
