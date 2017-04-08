@@ -86,4 +86,12 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $button->init();
         $this->assertEquals('#', $button->url);
     }
+
+    /** @test */
+    public function AddingCssClassesFromHtmlOptionClass() {
+        $button = new TbButton();
+        $button->htmlOptions['class'] = 'btn-test';
+        $button->init();
+        $this->assertEquals('btn-test btn btn-default', $button->htmlOptions['class']);
+    }
 }
