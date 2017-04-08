@@ -84,6 +84,16 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function PassHtmlHrefOptionsOfButtonToUrlOptionWithFalseUrlDefaultValue() {
+        $button = new TbButton();
+        $button->url = false;
+        $button->htmlOptions['href'] = 'test tag';
+        $button->init();
+        $this->assertNotEquals('test tag', $button->url);
+        $this->assertArrayHasKey('href', $button->htmlOptions, 'href in options not found');
+    }
+
+    /** @test */
     public function ActivateDropdownPossibilityForButton() {
         $button = new TbButton();
         $button->items = array('dropdown btn 1', 'dropdown btn 2');
