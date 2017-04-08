@@ -127,4 +127,12 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $this->assertContains('<i class=', $button->label);
         $this->assertNotContains('glyphicon glyphicon-icon', $button->icon);
     }
+
+    /** @test */
+    public function PassToggleStatusToHtmlOptionClassForButton() {
+        $button = new TbButton();
+        $button->toggle = true;
+        $button->init();
+        $this->assertEquals('button', $button->htmlOptions['data-toggle']);
+    }
 }
