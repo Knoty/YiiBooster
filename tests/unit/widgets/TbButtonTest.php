@@ -135,4 +135,12 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $button->init();
         $this->assertEquals('button', $button->htmlOptions['data-toggle']);
     }
+
+    /** @test */
+    public function PassLoadingTextToHtmlOptionClass() {
+        $button = new TbButton();
+        $button->loadingText = 'test';
+        $button->init();
+        $this->assertEquals('test', $button->htmlOptions['data-loading-text']);
+    }
 }
