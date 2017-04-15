@@ -173,4 +173,18 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('data-key', $button->htmlOptions);
         $this->assertEquals('value', $button->htmlOptions['data-key']);
     }
+
+    /** @test */
+    public function PassHtmlOptionsDataDelayInArrayType() {
+        $button = new TbButton();
+
+        $data = array('test-data-delay');
+        $button->tooltip = 'test_tooltip';
+        $button->toggle = false;
+        $button->htmlOptions['data-delay'] = $data;
+        $button->init();
+
+        $expected_output = CJSON::encode($data);
+        $this->assertEquals($expected_output, $button->htmlOptions['data-delay']);
+    }
 }
