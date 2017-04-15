@@ -151,4 +151,14 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $button->init();
         $this->assertEquals('test', $button->htmlOptions['data-complete-text']);
     }
+
+    /** @test */
+    public function CreateTooltipInNotArrayFormatWithoutToggleStatus() {
+        $button = new TbButton();
+        $button->tooltip = 'test_tooltip';
+        $button->toggle = false;
+        $button->tooltipOptions = null;
+        $button->init();
+        $this->assertEquals(array(), $button->tooltipOptions);
+    }
 }
