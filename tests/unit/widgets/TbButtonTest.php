@@ -161,4 +161,16 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
         $button->init();
         $this->assertEquals(array(), $button->tooltipOptions);
     }
+
+    /** @test */
+    public function PassTooltipArrayToHtmlOptions() {
+        $button = new TbButton();
+        $button->tooltip = 'test_tooltip';
+        $button->toggle = false;
+        $button->tooltipOptions = array('key' => 'value');
+        $button->init();
+        $this->assertEquals('tooltip', $button->htmlOptions['data-toggle']);
+        $this->assertArrayHasKey('data-key', $button->htmlOptions);
+        $this->assertEquals('value', $button->htmlOptions['data-key']);
+    }
 }
