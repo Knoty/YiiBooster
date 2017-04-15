@@ -42,7 +42,7 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function PassButtonDisabledToHtmlOptionClass() {
+    public function PassButtonDisabledToHtmlOptions() {
         $button = new TbButton();
         $button->disabled = true;
         $button->init();
@@ -103,7 +103,7 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function AddingCssClassesFromHtmlOptionClass() {
+    public function AddingCssClassesFromHtmlOptions() {
         $button = new TbButton();
         $button->htmlOptions['class'] = 'btn-test';
         $button->init();
@@ -129,7 +129,7 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function PassToggleStatusToHtmlOptionClassForButton() {
+    public function PassToggleStatusToHtmlOptionsForButton() {
         $button = new TbButton();
         $button->toggle = true;
         $button->init();
@@ -137,7 +137,7 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function PassLoadingTextToHtmlOptionClass() {
+    public function PassLoadingTextToHtmlOptions() {
         $button = new TbButton();
         $button->loadingText = 'test';
         $button->init();
@@ -145,7 +145,7 @@ class TbButtonTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function PassCompleteTextToHtmlOptionClass() {
+    public function PassCompleteTextToHtmlOptions() {
         $button = new TbButton();
         $button->completeText = 'test';
         $button->init();
